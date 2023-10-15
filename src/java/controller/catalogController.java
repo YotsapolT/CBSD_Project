@@ -11,8 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Products;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -33,21 +31,20 @@ public class catalogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List<Products> prodList = Product_ShoppingCart_Table.findAllProduct();
         HttpSession session = request.getSession();
 
-        //set every session params(_ChB) to false and params(_Qtt) to -1
+        //set every session attrs(_ChB) to false and attrs(_Qtt) to -1
         Enumeration<String> session_attrs = session.getAttributeNames();
         while(session_attrs.hasMoreElements()){        
             String single_session_attr = session_attrs.nextElement();
-            if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_ChB")){   //this session param is movie_CheckBox
+            if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_ChB")){   //this session attr is movie_CheckBox
                 session.setAttribute(single_session_attr, false);
-            }else if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_Qtt")){ //this session param is movie_Quantity
+            }else if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_Qtt")){ //this session attr is movie_Quantity
                 session.setAttribute(single_session_attr, "-1");
             }
         }
 
-        //update session params that match request params
+        //update session attrs that match request params
         Enumeration<String> req_params = request.getParameterNames();
         while(req_params.hasMoreElements()){             
             String single_req_param = req_params.nextElement();
@@ -58,7 +55,7 @@ public class catalogController extends HttpServlet {
             }
         }
 
-        //set request(for Result) params are used and delete (req_params and sess_params) which aren't used
+        //set request(for Result) attrs are used and delete (req_attrs and sess_attrs) which aren't used
         session_attrs = session.getAttributeNames();
         int totalPrice = 0;
         while(session_attrs.hasMoreElements()){    

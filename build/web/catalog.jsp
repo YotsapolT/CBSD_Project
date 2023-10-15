@@ -75,7 +75,7 @@
                             out.println("   <td style=\"text-align:center\"> "+ products.getPrice() + "</td>");
                             out.println("   <td> <input type=\"text\" name=\"" + products.getMovie() + "_Qtt\" value=\"\" " + "id=\"" + products.getMovie() + "_Qtt\" size=\"5\""
                                          + "style=\"text-align:right\" pattern=\"[1-9]+\" title=\"Please Enter a Number More than 1!\" onchange=\"enableSubmitBtn()\" disabled/></td>");
-                            out.println("<tr>");
+                            out.println("</tr>");
                         }
                         session = request.getSession();
                         if(session.isNew()){
@@ -86,13 +86,13 @@
                             out.println("</script>");
                         }else {
                             out.println("<script>");
-                            Enumeration<String> session_params = session.getAttributeNames();
-                            while(session_params.hasMoreElements()){
-                                String single_session_param = session_params.nextElement();
-                                if(!single_session_param.equals("WELD_S_HASH") && single_session_param.contains("_ChB")){
-                                    out.println("document.getElementById(\"" + single_session_param.replace("_ChB", "") + "\").checked = " + (Boolean) session.getAttribute(single_session_param) + ";");
-                                }else if(!single_session_param.equals("WELD_S_HASH") && single_session_param.contains("_Qtt")){
-                                    out.println("document.getElementById(\"" + single_session_param + "\").value = \"" + Integer.valueOf((String) session.getAttribute(single_session_param)) + "\";");
+                            Enumeration<String> session_attrs = session.getAttributeNames();
+                            while(session_attrs.hasMoreElements()){
+                                String single_session_attr = session_attrs.nextElement();
+                                if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_ChB")){
+                                    out.println("document.getElementById(\"" + single_session_attr.replace("_ChB", "") + "\").checked = " + (Boolean) session.getAttribute(single_session_attr) + ";");
+                                }else if(!single_session_attr.equals("WELD_S_HASH") && single_session_attr.contains("_Qtt")){
+                                    out.println("document.getElementById(\"" + single_session_attr + "\").value = \"" + Integer.valueOf((String) session.getAttribute(single_session_attr)) + "\";");
                                 }
                             }
                             out.println("</script>");
